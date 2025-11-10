@@ -1,0 +1,24 @@
+name: ai_pdf_assistant
+description: AI PDF Assistant
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod:
+  google_generative_ai:
+  file_picker:
+  syncfusion_flutter_pdf:
+  uuid:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+
