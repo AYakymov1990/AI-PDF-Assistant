@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
@@ -51,7 +50,7 @@ class ChatStateNotifier extends StateNotifier<ChatState> {
       if (result == null || result.files.isEmpty) return;
 
       final file = result.files.single;
-      final String? name = file.name;
+      final String name = file.name;
 
       // Получаем байты: предпочтительно из памяти, иначе читаем по пути
       Uint8List? bytes = file.bytes;

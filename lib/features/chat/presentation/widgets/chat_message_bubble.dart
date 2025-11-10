@@ -12,7 +12,7 @@ class ChatMessageBubble extends StatelessWidget {
     final theme = Theme.of(context);
     final bgColor = isUser
         ? theme.colorScheme.primary
-        : theme.colorScheme.surfaceVariant;
+        : theme.colorScheme.surfaceContainerHighest;
     final textColor =
         isUser ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface;
 

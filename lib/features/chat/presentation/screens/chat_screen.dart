@@ -73,7 +73,7 @@ class ChatScreen extends ConsumerWidget {
                 Expanded(
                   child: TextField(
                     controller: controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type your message...',
                       border: OutlineInputBorder(),
                       isDense: true,
