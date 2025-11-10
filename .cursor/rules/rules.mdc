@@ -1,0 +1,38 @@
+[
+  {
+    "rule": "Always use the Dart language and the Flutter framework to build the user interface and logic for the mobile application.",
+    "type": "always"
+  },
+  {
+    "rule": "Apply Clean Architecture with a division into three main layers: Presentation (UI), Domain (Business Logic), and Data (Repositories, Data Sources).",
+    "type": "always"
+  },
+  {
+    "rule": "In the Presentation (UI) layer, use the `flutter_riverpod` package for state management. Avoid `setState` for complex states. Prefer the `ConsumerWidget` or `ConsumerStatefulWidget` approach.",
+    "type": "always"
+  },
+  {
+    "rule": "The project's folder structure should reflect Clean Architecture. The main folders in `lib/` are: `features`, `core`, `config`. Each feature (e.g., `chat`, `pdf_upload`) within `features` has its own subfolders: `presentation`, `domain`, `data`.",
+    "type": "always"
+  },
+  {
+    "rule": "For integrating with LLM models (e.g., Gemini, OpenAI), use the official Dart/Flutter packages if available (e.g., `google_generative_ai`). Place the AI query logic in the Data layer (within a `DataSource` or `Repository`).",
+    "type": "always"
+  },
+  {
+    "rule": "The code must comply with `effective_dart` and `flutter_lints` rules. Ensure null-safety and add comments to more complex logic fragments.",
+    "type": "always"
+  },
+  {
+    "rule": "For parsing (extracting text) from PDF files, we will use the `syncfusion_flutter_pdfviewer` package or a similar one that can extract text. This logic belongs to the Data layer.",
+    "type": "always"
+  },
+  {
+    "rule": "When implementing the RAG (Retrieval-Augmented Generation) mechanism, first implement a simple version: 1. Extract the full text from the PDF. 2. Append the entire text as context in the prompt to the LLM. We will enhance this later with embeddings and a vector database.",
+    "type": "always"
+  },
+  {
+    "rule": "Respond in English unless asked otherwise.",
+    "type": "always"
+  }
+]
