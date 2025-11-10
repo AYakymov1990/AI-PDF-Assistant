@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_pdf_assistant/features/chat/presentation/providers/chat_providers.dart';
+import 'package:ai_pdf_assistant/features/chat/presentation/widgets/chat_message_bubble.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
+
+final _chatInputControllerProvider =
+    riverpod.Provider.autoDispose<TextEditingController>((ref) {
+  final controller = TextEditingController();
+  ref.onDispose(controller.dispose);
+  return controller;
+});
 
 class ChatScreen extends ConsumerWidget {
   const ChatScreen({super.key});
@@ -8,6 +17,7 @@ class ChatScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chatState = ref.watch(chatStateProvider);
+    final controller = ref.watch(_chatInputControllerProvider);
 
     final titleWidget = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,17 +47,32 @@ class ChatScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: Center(
-              child: Text('Upload a PDF to start chatting'),
-            ),
+          Expanded(
+            child: chatState.messages.isEmpty
+                ? const Center(
+                    child: Text('Upload a PDF to start chatting'),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    itemCount: chatState.messages.length,
+                    itemBuilder: (context, index) {
+                      final msg = chatState.messages[index];
+                      return ChatMessageBubble(message: msg);
+                    },
+                  ),
           ),
+          if (chatState.isLoading)
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: CircularProgressIndicator(),
+            ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
+                    controller: controller,
                     decoration: InputDecoration(
                       hintText: 'Type your message...',
                       border: OutlineInputBorder(),
@@ -59,7 +84,11 @@ class ChatScreen extends ConsumerWidget {
                 IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: () {
-                    // Отправка сообщения будет реализована позже
+                    final text = controller.text;
+                    ref
+                        .read(chatStateProvider.notifier)
+                        .askQuestion(text)
+                        .then((_) => controller.clear());
                   },
                 ),
               ],
